@@ -1,0 +1,48 @@
+#!/usr/bin/python
+import os
+import time
+import signal
+import shutil
+import sys
+import whrandom
+import socket
+import counterApplications
+
+tmpDir     = sys.argv[1]
+test_type  = sys.argv[2]
+num_permut = sys.argv[3]
+cox_dict = {"Cox":"survival_time","FisherIxJ":"","t":"","Anova":"","Regres":""}
+
+def collectZombies(k = 10):
+    """ Make sure there are no zombies in the process tables.
+    This is probably an overkill, but works.
+    """
+    for nk in range(k):
+        try:
+            tmp = os.waitpid(-1, os.WNOHANG)
+        except:
+            None
+
+lamSuffix = str(os.getpid()) + str(whrandom.randint(1, 999999))
+#lamenv = os.putenv('LAM_MPI_SESSION_SUFFIX', lamSuffix)
+
+# os.system("cd " + tmpDir + "; /http/mpi.log/buryThem.py")
+
+killedlamandr = os.system('/http/mpi.log/killOldLam.py')
+try:
+    counterApplications.add_to_log('PomeloII', tmpDir, socket.gethostname())
+except:
+    None
+
+
+
+Pomelo_launch = "mpiexec multest_paral " + test_type + " maxT " + num_permut + " covariate class_labels " + cox_dict[test_type]
+fullPomelocommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + '";' + '/usr/bin/lamboot -H /http/mpi.defs/lamb-host.' + socket.gethostname() + '.def; cd ' + tmpDir + '; ' + Pomelo_launch + " > pomelo.msg"
+
+Pom_run = os.system(fullPomelocommand)
+
+collectZombies()
+
+lamenvfile = open(tmpDir + '/lamSuffix', mode = 'w')
+lamenvfile.write(lamSuffix)
+lamenvfile.close()

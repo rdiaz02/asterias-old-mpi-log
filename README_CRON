@@ -1,0 +1,3 @@
+Both snd_mpi_errors.py and snd_mail_cron.py are run by cron. snd_mpi_errors.py is run every 5 min at 10.2.1.55 by emorrissey, whereas 
+snd_mail_cron.py is run five minutes before midnight.
+

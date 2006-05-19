@@ -1,0 +1,27 @@
+;; Object mpi.log/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "mpi.log/"
+  :tables (list 
+   (semanticdb-table "tryRrun.py"
+    :major-mode 'python-mode
+    :tags '(("os" include nil nil [19 28]) ("time" include nil nil [29 40]) ("signal" include nil nil [41 54]) ("shutil" include nil nil [55 68]) ("sys" include nil nil [69 79]) ("socket" include nil nil [80 93]) ("whrandom" include nil nil [95 110]) ("tmpDir" variable nil nil [111 131]) ("numtries" variable nil nil [132 154]) ("application" variable nil nil [155 180]) ("collectZombies" function (:arguments (("k" variable nil (reparse-symbol function_parameters) [601 602]))) nil [582 840]) ("os" code nil nil [1157 1214]) ("startedOK" variable nil nil [1284 1301]) ("for" code nil nil [1302 2830]) ("if" code nil nil [2838 4249]))
+    :file "tryRrun.py"
+    :pointmax 4251
+    )
+   (semanticdb-table "pomelo_run.py"
+    :major-mode 'python-mode
+    :tags '(("os" include nil nil [19 28]) ("time" include nil nil [29 40]) ("signal" include nil nil [41 54]) ("shutil" include nil nil [55 68]) ("sys" include nil nil [69 79]) ("whrandom" include nil nil [80 95]) ("socket" include nil nil [96 109]) ("tmpDir" variable nil nil [111 135]) ("test_type" variable nil nil [136 160]) ("num_permut" variable nil nil [161 185]) ("cox_dict" variable nil nil [186 265]) ("collectZombies" function (:arguments (("k" variable nil (reparse-symbol function_parameters) [286 287]))) nil [267 525]) ("lamSuffix" code nil nil [526 589]) ("Pomelo_launch" code nil nil [708 835]) ("fullPomelocommand" code nil nil [836 1045]) ("Pom_run" variable nil nil [1047 1085]) ("collectZombies" code nil nil [1087 1103]) ("lamenvfile" variable nil nil [1105 1157]) ("lamenvfile" code nil nil [1158 1185]) ("lamenvfile" code nil nil [1186 1204]))
+    :file "pomelo_run.py"
+    :pointmax 1205
+    )
+   (semanticdb-table "tryRrun2.py"
+    :major-mode 'python-mode
+    :tags '(("os" include nil (dependency-file none) [19 28]) ("time" include nil (dependency-file none) [29 40]) ("signal" include nil (dependency-file none) [41 54]) ("shutil" include nil (dependency-file none) [55 68]) ("sys" include nil (dependency-file none) [69 79]) ("socket" include nil (dependency-file none) [80 93]) ("counterApplications" include nil (dependency-file none) [94 120]) ("whrandom" include nil (dependency-file none) [121 136]) ("tmpDir" variable nil nil [137 157]) ("numtries" variable nil nil [158 180]) ("application" variable nil nil [181 206]) ("collectZombies" function (:arguments (("k" variable nil (reparse-symbol function_parameters) [627 628]))) nil [608 866]) ("os" code nil nil [1183 1240]) ("killedlamandr" variable nil nil [1310 1366]) ("try" code nil nil [1368 1468]) ("startedOK" variable nil nil [1469 1486]) ("for" code nil nil [1487 3015]) ("if" code nil nil [3023 4434]))
+    :file "tryRrun2.py"
+    :pointmax 4436
+    )
+   )
+  :file "semantic.cache"
+  :semantic-tag-version "2.0pre3"
+  :semanticdb-version "2.0pre3"
+  )

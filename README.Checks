@@ -1,0 +1,5 @@
+Verify whats up with sanitize and consider using daemon.
+
+Can buryThemDaemon.py be used (as daemon)?
+
+Generate output if erros when trying to start a process with tryRrun2.py
