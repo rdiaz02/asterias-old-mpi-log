@@ -23,6 +23,8 @@ def collectZombies(k = 10):
         except:
             None
 
+os.system("cd " + tmpDir + "; /http/mpi.log/buryPom.py")
+
 lamSuffix = str(os.getpid()) + str(whrandom.randint(1, 999999))
 killedlamandr = os.system('/http/mpi.log/killOldLam.py')
 try:
