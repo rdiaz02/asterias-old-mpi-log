@@ -16,9 +16,15 @@
     )
    (semanticdb-table "tryRrun2.py"
     :major-mode 'python-mode
-    :tags '(("os" include nil (dependency-file none) [19 28]) ("time" include nil (dependency-file none) [29 40]) ("signal" include nil (dependency-file none) [41 54]) ("shutil" include nil (dependency-file none) [55 68]) ("sys" include nil (dependency-file none) [69 79]) ("socket" include nil (dependency-file none) [80 93]) ("counterApplications" include nil (dependency-file none) [94 120]) ("whrandom" include nil (dependency-file none) [121 136]) ("tmpDir" variable nil nil [137 157]) ("numtries" variable nil nil [158 180]) ("application" variable nil nil [181 206]) ("collectZombies" function (:arguments (("k" variable nil (reparse-symbol function_parameters) [627 628]))) nil [608 866]) ("os" code nil nil [1183 1240]) ("killedlamandr" variable nil nil [1310 1366]) ("try" code nil nil [1368 1468]) ("startedOK" variable nil nil [1469 1486]) ("for" code nil nil [1487 3015]) ("if" code nil nil [3023 4434]))
+    :tags '(("os" include nil nil #<overlay from 19 to 28 in tryRrun3.py>) ("time" include nil nil #<overlay from 29 to 40 in tryRrun3.py>) ("signal" include nil nil #<overlay from 41 to 54 in tryRrun3.py>) ("shutil" include nil nil #<overlay from 55 to 68 in tryRrun3.py>) ("sys" include nil nil #<overlay from 69 to 79 in tryRrun3.py>) ("socket" include nil nil #<overlay from 80 to 93 in tryRrun3.py>) ("counterApplications" include nil nil #<overlay from 94 to 120 in tryRrun3.py>) ("whrandom" include nil nil #<overlay from 121 to 136 in tryRrun3.py>) ("random" include nil nil #<overlay from 137 to 150 in tryRrun3.py>) ("tmpDir" variable nil nil #<overlay from 151 to 171 in tryRrun3.py>) ("numtries" variable nil nil #<overlay from 200 to 213 in tryRrun3.py>) ("MIN_LAM_NODES" variable nil nil #<overlay from 265 to 283 in tryRrun3.py>) ("collectZombies" function (:arguments (("k" variable nil (reparse-symbol function_parameters) #<overlay from 811 to 812 in tryRrun3.py>))) nil #<overlay from 792 to 1050 in tryRrun3.py>) ("try" code nil nil #<overlay from 1555 to 1655 in tryRrun3.py>) ("startedOK" variable nil nil #<overlay from 1656 to 1673 in tryRrun3.py>) ("time" code nil nil #<overlay from 1674 to 1706 in tryRrun3.py>) ("for" code nil nil #<overlay from 1759 to 3071 in tryRrun3.py>) ("if" code nil nil #<overlay from 3079 to 4490 in tryRrun3.py>))
     :file "tryRrun2.py"
     :pointmax 4436
+    )
+   (semanticdb-table "tryBootLAM.py"
+    :major-mode 'python-mode
+    :tags 'nil
+    :file "tryBootLAM.py"
+    :pointmax 1
     )
    )
   :file "semantic.cache"
