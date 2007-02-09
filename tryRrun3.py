@@ -6,17 +6,12 @@ import shutil
 import sys
 import socket
 import counterApplications
-import whrandom
 import random
 tmpDir = sys.argv[1]
 application = sys.argv[2]
 
 
-numtries = 50 ## I redefine it here. for really stubborn cases
-
-
-MIN_LAM_NODES = 15 ## highly deployment dependant. But in our clusters
-## less than 15 noes means something seriously wrong.
+numtries = 20 ## I redefine it here. for really stubborn cases
 
 
 # def tryRrun(Rcommand, tmpDir, numtries = 10, application = "SignS")
@@ -54,7 +49,7 @@ except:
     None
 
 startedOK = False
-time.sleep(random.uniform(0, 8)) ## to prevent truly simultaneous from crashing MPI
+time.sleep(random.uniform(0.5, 8)) ## to prevent truly simultaneous from crashing MPI
 
 for i in range(int(numtries)):
     lamSuffix = str(int(time.time())) + str(os.getpid()) + str(random.randint(10, 9999))
@@ -64,15 +59,16 @@ for i in range(int(numtries)):
     lamenvfile.close()
     lamenv = os.putenv('LAM_MPI_SESSION_SUFFIX', lamSuffix)
 
-    fullRcommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + '";' + '/usr/bin/lamboot -H /http/mpi.defs/lamb-host.' + socket.gethostname() + '.def; cd ' + tmpDir + '; sleep 2;' + '/usr/local/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2> error.msg &'
+    fullRcommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + \
+                   '"; /http/mpi.log/tryBootLAM.py; cd ' + tmpDir + \
+                   '; sleep 1; /usr/local/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2> error.msg &'
     Rrun = os.system(fullRcommand)
-    time.sleep(40 + random.uniform(1, 12))
+    time.sleep(40)
     collectZombies()
 
     if os.path.exists(tmpDir + "/mpiOK"):
-        if int(os.popen('lamnodes | wc').readline().split()[0]) > MIN_LAM_NODES:
-            startedOK = True
-            break
+        startedOK = True
+        break
     try:
         lamkill = os.system('lamhalt; lamwipe')
     except:
