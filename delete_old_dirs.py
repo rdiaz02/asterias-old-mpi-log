@@ -29,11 +29,11 @@ def delete_old(location):
 
 dirs_to_clean = ('/http/pomelo2/www/tmp',
                  '/http/tnasas/www/tmp',
-                 '/http/signs/www/tmp',
-                 '/http/genesrf/www/tmp',
-                 '/http/adacgh/www/tmp',
-                 '/http/prep/www/tmp',
-                 '/http/dnmad/www/temp')
+                 '/http/signs2/www/tmp',
+                 '/http/genesrf2/www/tmp',
+                 '/http/adacgh2/www/tmp',
+                 '/http/prep/www/tmp')
+                ##'/http/dnmad/www/temp')
 
 
 for this_dir in dirs_to_clean:

@@ -7,9 +7,18 @@ import sys
 import socket
 import counterApplications
 import whrandom
+import random
 tmpDir = sys.argv[1]
 numtries = sys.argv[2]
 application = sys.argv[3]
+
+
+numtries = 50 ## I redefine it here. for really stubborn cases
+
+
+MIN_LAM_NODES = 15 ## highly deployment dependant. But in our clusters
+## less than 15 noes means something seriously wrong.
+
 
 # def tryRrun(Rcommand, tmpDir, numtries = 10, application = "SignS")
 #     """ Try to launch R via os.system, verifying MPI got initialized.
@@ -36,10 +45,9 @@ def collectZombies(k = 10):
 ## lamdpid = os.popen('ps --ppid ' + str(lampid) + ' -o "%p" --no-headers').readline()
 ## time.sleep(0.5)
 
-os.system("cd " + tmpDir + "; /http/mpi.log/buryThem.py")
-#os.system("cd " + tmpDir + "; /http/mpi.log/sanitizeRmpiProcs.py")
-
-killedlamandr = os.system('/http/mpi.log/killOldLam.py')
+## simpler if these two are cron jobs; this way, the appl. is faster.
+#os.system("cd " + tmpDir + "; /http/mpi.log/buryThem.py")
+#killedlamandr = os.system('/http/mpi.log/killOldLam.py')
 
 try:
     counterApplications.add_to_log(application, tmpDir, socket.gethostname())
@@ -47,35 +55,25 @@ except:
     None
 
 startedOK = False
-for i in range(int(numtries)):
+time.sleep(random.uniform(0, 8)) ## to prevent truly simultaneous from crashing MPI
 
-    lamSuffix = str(os.getpid()) + str(whrandom.randint(1, 999999))
+for i in range(int(numtries)):
+    lamSuffix = str(int(time.time())) + str(os.getpid()) + str(random.randint(10, 9999))
     lamenvfile = open(tmpDir + '/lamSuffix', mode = 'w')
     lamenvfile.write(lamSuffix)
     lamenvfile.flush()
     lamenvfile.close()
     lamenv = os.putenv('LAM_MPI_SESSION_SUFFIX', lamSuffix)
-#     lampid = os.spawnlp(os.P_NOWAITO,
-#                         '/usr/bin/lamboot',
-#                         '/usr/bin/lamboot',
-#                         '/http/mpi.defs/lamb-host.' + socket.gethostname() + '.def')
 
-#     Rcommand = "cd " + tmpDir + "; " + "/usr/bin/R  --no-restore --no-readline --no-save --slave <f1.R >f1.Rout 2> error.msg &"
-
-#    Rrun = os.system(Rcommand)
-
-
-    fullRcommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + '";' + '/usr/bin/lamboot -H /http/mpi.defs/lamb-host.' + socket.gethostname() + '.def; cd ' + tmpDir + '; ' + '/usr/bin/R  --no-restore --no-readline --no-save --slave <f1.R >f1.Rout 2> error.msg &'
+    fullRcommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + '";' + '/usr/bin/lamboot -H /http/mpi.defs/lamb-host.' + socket.gethostname() + '.def; cd ' + tmpDir + '; sleep 2;' + '/usr/local/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2> error.msg &'
     Rrun = os.system(fullRcommand)
-    time.sleep(30)
+    time.sleep(40 + random.uniform(1, 12))
     collectZombies()
 
     if os.path.exists(tmpDir + "/mpiOK"):
-        startedOK = True
-#         lamenvfile = open(tmpDir + '/lamSuffix', mode = 'w')
-#         lamenvfile.write(lamSuffix)
-#         lamenvfile.close()
-        break
+        if int(os.popen('lamnodes | wc').readline().split()[0]) > MIN_LAM_NODES:
+            startedOK = True
+            break
     try:
         lamkill = os.system('lamhalt; lamwipe')
     except:
