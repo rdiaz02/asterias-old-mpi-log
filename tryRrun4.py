@@ -53,7 +53,7 @@ for i in range(int(numtries)):
     fullRcommand = 'cd ' + tmpDir + \
                    '; sleep 1; /usr/local/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2> error.msg &'
     Rrun = os.system(fullRcommand)
-    time.sleep(40)
+    time.sleep(400)
     collectZombies()
 
     if os.path.exists(tmpDir + "/mpiOK"):
