@@ -49,7 +49,7 @@ except:
     None
 
 startedOK = False
-time.sleep(random.uniform(0.5, 10)) ## to prevent truly simultaneous from crashing MPI
+time.sleep(random.uniform(0.5, 15)) ## to prevent truly simultaneous from crashing MPI
 
 for i in range(int(numtries)):
     lamSuffix = str(int(time.time())) + str(os.getpid()) + str(random.randint(10, 9999))
@@ -62,7 +62,7 @@ for i in range(int(numtries)):
     fullRcommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + \
                    '"; /http/mpi.log/tryBootLAM.py ' + lamSuffix + \
                    '; cd ' + tmpDir + \
-                   '; sleep 1; /http/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2> error.msg &'
+                   '; sleep 1; /http/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2>> error.msg &'
     Rrun = os.system(fullRcommand)
     time.sleep(100) ## this will always be too short if too many procs ...
     collectZombies()
