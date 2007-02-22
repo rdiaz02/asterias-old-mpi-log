@@ -7,16 +7,13 @@
 
 import sys
 import os
-import cgi 
-import types
 import time
-import shutil
-import signal
-import re
 import glob
-import tarfile
+
+tmpDir = sys.argv[1]
 
 machine_root = 'karl'
+TIME_BETWEEN_CHECKS = 120
 
 
 def lamboot(lamSuffix):
@@ -120,3 +117,9 @@ def recover_from_lam_crash(tmpDir, machine_root = machine_root,
               '" >> ' + tmpDir + '/recoverFromLAMCrash.out')
     return final_value
 
+
+
+
+while True:
+    lam_recovered = recover_from_lam_crash(tmpDir)
+    time.sleep(TIME_BETWEEN_CHECKS)
