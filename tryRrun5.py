@@ -43,7 +43,7 @@ startedOK = False
 ### here is the "queueing" code
 ## FIXME: set a max time in queue, and o.w. bail out?
 while True:
-    num_rslaves = int(os.popen('pgrep -c Rslaves.sh').readline().split()[0])
+    num_rslaves = int(os.popen('pgrep Rslaves.sh | wc').readline().split()[0])
     if num_rslaves < MAX_SIMUL_RSLAVES:
         break
     else:
