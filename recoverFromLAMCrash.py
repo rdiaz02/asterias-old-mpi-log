@@ -71,18 +71,20 @@ def recover_from_lam_crash(tmpDir, machine_root = machine_root,
     final_value = 'NoCrash'
     OTHER_LAM_MSGS = 'Call stack within LAM:'
     lam_logs = glob.glob(tmpDir + '/' + machine_root + '*.*.*.log')
-    in_error_msg = os.popen('grep MPI_Error_string ' + \
-                            tmpDir + '/error.msg | wc').readline().split()[0]
+    in_error_msg = int(os.popen('grep MPI_Error_string ' + \
+                                tmpDir + '/error.msg | wc').readline().split()[0])
     if in_error_msg > 0:
         os.system('rm ' + tmpDir + '/error.msg')
         for lam_log in lam_logs:
             os.system('rm ' + lam_log)
     else: ## look in lam logs
+        in_lam_logs = 0
         for lam_log in lam_logs:
-            tmp1 = os.popen('grep ' + OTHER_LAM_MSGS + ' ' + \
-                            lam_log + ' | wc').readline().split()[0]
+            tmp1 = int(os.popen('grep "' + OTHER_LAM_MSGS + '" ' + \
+                                lam_log + ' | wc').readline().split()[0])
             if tmp1 > 0:
                 in_lam_logs = 1
+                for lam_log in lam_logs: os.system('rm ' + lam_log)
                 break
 
     if (in_error_msg > 0) or (in_lam_logs > 0):
