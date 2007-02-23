@@ -14,7 +14,7 @@ application = sys.argv[2]
 numtries = 20 ## I redefine it here. for really stubborn cases
 
 
-MAX_SIMUL_RSLAVES = 16
+MAX_SIMUL_RSLAVES = 12
 CHECK_QUEUE = 120
 
 def collectZombies(k = 10):
@@ -42,7 +42,9 @@ startedOK = False
 
 ### here is the "queueing" code
 ## FIXME: set a max time in queue, and o.w. bail out?
+
 while True:
+    time.sleep(random.uniform(0, 2)) ## to prevent truly simultaneous from crashing MPI
     num_rslaves = int(os.popen('pgrep Rslaves.sh | wc').readline().split()[0])
     if num_rslaves < MAX_SIMUL_RSLAVES:
         break

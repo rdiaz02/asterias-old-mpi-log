@@ -5,9 +5,14 @@ import os
 import time
 import glob
 
-dirsVisit = ('/http/genesrf2/www/R.running.procs',
-             '/http/signs2/www/R.running.procs',
-             '/http/adacgh2/www/R.running.procs')
+dirsVisit = ('/http/signs2/www/R.running.procs')
+#     '/http/genesrf2/www/R.running.procs',
+#     '/http/signs2/www/R.running.procs',
+#     '/http/adacgh2/www/R.running.procs')
+
+
+commonRoute = 'R.running.procs'
+
 
 ## FIXME: we'll need to fix this later: generate dictionary
 
@@ -58,7 +63,7 @@ def R_done(tmpDir):
     soFar = Rrout.read()
     Rrout.close()
     finishedOK = soFar.endswith("Normal termination\n")
-    errorRun = soFar.endswith("Execution halted\n")
+    errorRun = soFar.endswith("Execution halted\n") ## might interact badly with relaunching lam
     if finishedOK or errorRun:
         return 1
     else:
@@ -68,33 +73,32 @@ def fcheck():
     for theDir in dirsVisit:
 	rrunsFiles = glob.glob(theDir + '/R.*@*%*')
 	for pidMachine in rrunsFiles:
-	    t1 = pidMachine.split('@')
-	    t2 = t1[1].split('%')
-	    Machine = t2[0]
-	    pid = t2[1]
-	    alive = int(os.popen("ssh " + MachineIP[Machine] + " 'ps -p " + pid + 
-	    " --no-headers | wc -l'").readline())
+	    t1 = pidMachine.split('@')[0].split('/R.')[-1]
+            thisDir = theDir.replace(commonRoute) + 'tmp/ ' + t1
+            machine, pid = open(thisDir + '/current_R_proc_info',
+                                mode = 'r').readlines()[0].split('\t')
+	    alive = int(os.popen("ssh " + machine + " 'ps -p " + pid + \
+                                 " --no-headers | wc -l'").readline())
 	    if not alive:
                 try:
                     os.remove(pidMachine)
                 except:
                     None
                 ## were we done legitimately?
-                tmpDir = theDir.split('R.')[0] + 'tmp/' + t1[0].split('R.')[2]
 		## recall natural.death.pid and killed.pid only created after every 30" check.
 		## But python or the shell can take a while to complete several operations
 		## 
-		legitimate = os.path.exists(tmpDir + "/natural.death.pid.txt") or os.path.exists(tmpDir + "/killed.pid.txt") or R_done(tmpDir)
+		legitimate = os.path.exists(thisDir + "/natural.death.pid.txt") or os.path.exists(thisDir + "/killed.pid.txt") or R_done(thisDir)
                 
                 if not legitimate:
 		## write the results file
-                    out1 = open(tmpDir + "/natural.death.pid.txt", mode = "w")
-                    out2 = open(tmpDir + "/kill.pid.txt", mode = "w")
+                    out1 = open(thisDir + "/natural.death.pid.txt", mode = "w")
+                    out2 = open(thisDir + "/kill.pid.txt", mode = "w")
                     out1.write('Process died without saying goodbye!!')
                     out2.write('Process died without saying goodbye!!')
                     out1.close()
                     out2.close()
-                    outf = open(tmpDir + "/pre-results.html", mode = "w")
+                    outf = open(thisDir + "/pre-results.html", mode = "w")
                     outf.write("<html><head><title> Some undiagnosed problem</title></head><body>\n")
                     outf.write("<h1> Some undiagnosed problem happened</h1>")
                     outf.write(" <p> Your process died unexpectedly, without giving")
@@ -104,10 +108,6 @@ def fcheck():
                     outf.write("so we can diagnose the error.</p>")
                     outf.write("</body></html>")
                     outf.close()
-                    shutil.copyfile(tmpDir + "/pre-results.html", tmpDir + "/results.html")
+                    shutil.copyfile(thisDir + "/pre-results.html", thisDir + "/results.html")
 
 fcheck()
-
-
-# while True:
-#     fcheck()
