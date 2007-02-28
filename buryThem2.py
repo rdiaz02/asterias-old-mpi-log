@@ -5,7 +5,7 @@ import os
 import time
 import glob
 
-dirsVisit = ('/http/signs2/www/R.running.procs')
+dirsVisit = ('/http/signs2/www/R.running.procs','/http/adacgh2/www/R.running.procs')
 #     '/http/genesrf2/www/R.running.procs',
 #     '/http/signs2/www/R.running.procs',
 #     '/http/adacgh2/www/R.running.procs')
@@ -74,9 +74,9 @@ def fcheck():
 	rrunsFiles = glob.glob(theDir + '/R.*@*%*')
 	for pidMachine in rrunsFiles:
 	    t1 = pidMachine.split('@')[0].split('/R.')[-1]
-            thisDir = theDir.replace(commonRoute) + 'tmp/ ' + t1
+            thisDir = theDir.replace(commonRoute, '') + 'tmp/' + t1
             machine, pid = open(thisDir + '/current_R_proc_info',
-                                mode = 'r').readlines()[0].split('\t')
+                                mode = 'r').readlines()[0].split()
 	    alive = int(os.popen("ssh " + machine + " 'ps -p " + pid + \
                                  " --no-headers | wc -l'").readline())
 	    if not alive:
