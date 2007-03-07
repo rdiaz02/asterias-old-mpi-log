@@ -26,13 +26,20 @@ def delete_old(location):
                     None
 
 
-
+## expanded to include R.running.procs
 dirs_to_clean = ('/http/pomelo2/www/tmp',
                  '/http/tnasas/www/tmp',
                  '/http/signs2/www/tmp',
                  '/http/genesrf2/www/tmp',
                  '/http/adacgh2/www/tmp',
-                 '/http/prep/www/tmp')
+                 '/http/prep/www/tmp',
+##                 '/http/pomelo2/www/tmp',
+##                 '/http/tnasas/www/tmp',
+                 '/http/signs2/www/R.running.procs',
+                 '/http/genesrf2/www/R.running.procs',
+                 '/http/adacgh2/www/R.running.procs'
+##                 '/http/prep/www/tmp'
+                 )
                 ##'/http/dnmad/www/temp')
 
 

@@ -1,8 +1,5 @@
 #!/usr/bin/python
 
-## All this code is copyright Ramon Diaz-Uriarte. For security reasons, this is for
-## now confidential. No license is granted to copy, distribute, or modify it.
-## Once everything is OK, it will be distributed under the GPL.
 
 
 import sys
@@ -98,7 +95,7 @@ def recover_from_lam_crash(tmpDir, machine_root = machine_root,
         if lam_ok == 0: lboot = lamboot(lamSuffix)
         Rcommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + \
                    '"; cd ' + tmpDir + \
-                   '; sleep 1; /http/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2>> error.msg &'
+                   '; sleep 1; /http/R-custom/bin/R --no-readline --no-save --slave <f1.R >>f1.Rout 2>> error.msg &'
         Rrun = os.system(Rcommand)
         ## Verify Rmpi started OK, and relaunch o.w.
         for rmpytry in range(maxrmpi_tries):
