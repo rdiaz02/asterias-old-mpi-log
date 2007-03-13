@@ -117,8 +117,17 @@ def recover_from_lam_crash(tmpDir, machine_root = machine_root,
     return final_value
 
 
+def are_we_done(tmpDir):
+    """ We should not continue doing this if we are done.
+    checkdone.cgi should kill this process, but sometimes things don't work."""
+    if os.path.exists(tmpDir + "/natural.death.pid.txt") or os.path.exists(tmpDir + "/killed.pid.txt"):
+        return True
+    else:
+        return False
+
 
 
 while True:
+    if are_we_done(tmpDir): break
     lam_recovered = recover_from_lam_crash(tmpDir)
     time.sleep(TIME_BETWEEN_CHECKS)

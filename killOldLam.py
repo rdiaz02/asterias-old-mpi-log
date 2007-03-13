@@ -23,6 +23,7 @@ USER = 'www-data'
 
 lamds_running = os.popen('ps -C lamd -o pid,user,bsdstart h').readlines()
 Rs_running    = os.popen('ps -C R -o pid,user,bsdstart h').readlines()
+Rslaves_running    = os.popen('ps -C Rslaves.sh -o pid,user,bsdstart h').readlines()
 
 for proc_line in lamds_running:
     proc_break = proc_line.strip().split()
@@ -30,6 +31,11 @@ for proc_line in lamds_running:
 	os.system('kill -s 9 ' + str(int(proc_break[0])))
 
 for proc_line in Rs_running:
+    proc_break = proc_line.strip().split()
+    if (proc_break[1] == USER) and (proc_break[2].find(':') == -1):
+	os.system('kill -s 9 ' + str(int(proc_break[0])))
+
+for proc_line in Rslaves_running:
     proc_break = proc_line.strip().split()
     if (proc_break[1] == USER) and (proc_break[2].find(':') == -1):
 	os.system('kill -s 9 ' + str(int(proc_break[0])))
