@@ -16,7 +16,7 @@ numtries = 20 ## I redefine it here. for really stubborn cases
 
 MAX_SIMUL_RSLAVES = 12
 CHECK_QUEUE = 120
-MAX_DURATION_TRY = 3 * 3600 ## try for up to this many seconds
+MAX_DURATION_TRY = 5 * 3600 ## try for up to this many seconds
 
 def collectZombies(k = 10):
     """ Make sure there are no zombies in the process tables.
@@ -108,7 +108,7 @@ else: ## if not cannotStart:
                        '; cd ' + tmpDir + \
                        '; sleep 1; /http/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2>> error.msg &'
         Rrun = os.system(fullRcommand)
-        time.sleep(100) ## this will always be too short if too many procs ...
+        time.sleep(600) ## this will always be too short if too many procs ...
         collectZombies()
 
         if os.path.exists(tmpDir + "/mpiOK"):
