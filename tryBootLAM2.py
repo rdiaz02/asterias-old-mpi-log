@@ -19,7 +19,7 @@ MIN_LAM_NODES = 15 ## highly deployment dependant. But in our clusters
 for ntr in range(numtries):
     ##print 'doing ntr ' + str(ntr)
     tmp = os.system('export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + \
-                    '"; /usr/bin/lamboot -H /http/mpi.defs/lamb-host.' + \
+                    '"; /usr/bin/lamboot -b -H /http/mpi.defs/lamb-host.' + \
                     socket.gethostname() + '.2cpu.def 2>/dev/null')
     time.sleep(1)
     if (tmp == 0) and \
