@@ -6,10 +6,12 @@ import random
 import sys
 
 lamSuffix = sys.argv[1]
+cpus      = sys.argv[2]
 
 numtries = 20
 
 MIN_LAM_NODES = 15 ## highly deployment dependant. But in our clusters
+## is what we use.
 
 ## Note: It would be nicer if, on failure after 20 tries, we could signal
 ## the error and pass it to tryRrun3.py. Now, after the 20 tris, we
@@ -20,7 +22,7 @@ for ntr in range(numtries):
     ##print 'doing ntr ' + str(ntr)
     tmp = os.system('export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + \
                     '"; /usr/bin/lamboot -b -H /http/mpi.defs/lamb-host.' + \
-                    socket.gethostname() + '.2cpu.def 2>/dev/null')
+                    socket.gethostname() + '.' + cpus + 'cpu.def 2>/dev/null')
     time.sleep(1)
     if (tmp == 0) and \
            (int(os.popen('export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + \
