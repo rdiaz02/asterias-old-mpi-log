@@ -6,7 +6,7 @@ import shutil
 import sys
 import socket
 import counterApplications
-import whrandom
+import random
 tmpDir = sys.argv[1]
 numtries = sys.argv[2]
 application = sys.argv[3]
@@ -49,7 +49,7 @@ except:
 startedOK = False
 for i in range(int(numtries)):
 
-    lamSuffix = str(os.getpid()) + str(whrandom.randint(1, 999999))
+    lamSuffix = str(os.getpid()) + str(random.randint(1, 999999))
     lamenvfile = open(tmpDir + '/lamSuffix', mode = 'w')
     lamenvfile.write(lamSuffix)
     lamenvfile.flush()

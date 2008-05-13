@@ -5,8 +5,8 @@ import os
 import time
 import glob
 
-dirsVisit = ('/http/signs2/www/R.running.procs','/http/adacgh2/www/R.running.procs')
-#     '/http/genesrf2/www/R.running.procs',
+dirsVisit = ('/http/signs2/www/R.running.procs','/http/adacgh2/www/R.running.procs',
+	     '/http/genesrf2/www/R.running.procs')
 #     '/http/signs2/www/R.running.procs',
 #     '/http/adacgh2/www/R.running.procs')
 

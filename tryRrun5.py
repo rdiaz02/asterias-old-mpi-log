@@ -30,8 +30,9 @@ def collectZombies(k = 10):
 
 
 ## simpler if these two are cron jobs; this way, the appl. is faster.
-#os.system("cd " + tmpDir + "; /http/mpi.log/buryThem.py")
-#killedlamandr = os.system('/http/mpi.log/killOldLam.py')
+# buried = os.system("/http/mpi.log/buryThem2.py")
+killedlamandr = os.system('/http/mpi.log/killOldLamAllMachines.py')
+# cleaned_dirs = os.system('/http/mpi.log/delete_old_dirs.py')
 
 try:
     counterApplications.add_to_log(application, tmpDir, socket.gethostname())

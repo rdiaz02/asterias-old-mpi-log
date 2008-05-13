@@ -4,7 +4,7 @@ import time
 import signal
 import shutil
 import sys
-import whrandom
+import random
 import socket
 import counterApplications
 
@@ -25,7 +25,7 @@ def collectZombies(k = 10):
 
 os.system("cd " + tmpDir + "; /http/mpi.log/buryPom.py")
 
-lamSuffix = str(os.getpid()) + str(whrandom.randint(1, 999999))
+lamSuffix = str(os.getpid()) + str(random.randint(1, 999999))
 killedlamandr = os.system('/http/mpi.log/killOldLam.py')
 try:
     counterApplications.add_to_log('PomeloII', tmpDir, socket.gethostname())
