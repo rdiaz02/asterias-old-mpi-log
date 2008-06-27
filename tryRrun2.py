@@ -71,7 +71,7 @@ for i in range(int(numtries)):
     lamenvfile.close()
     lamenv = os.putenv('LAM_MPI_SESSION_SUFFIX', lamSuffix)
 
-    fullRcommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + '";' + '/usr/bin/lamboot -H /http/mpi.defs/lamb-host.' + socket.gethostname() + '.def; cd ' + tmpDir + '; sleep 2;' + '/http/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2> error.msg &'
+    fullRcommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + '";' + '/usr/bin/lamboot -b -H /http/mpi.defs/lamb-host.' + socket.gethostname() + '.def; cd ' + tmpDir + '; sleep 40;' + '/http/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2> error.msg &'
     Rrun = os.system(fullRcommand)
     os.system('touch ' + tmpDir + '/first_Rrun') ## debug
     time.sleep(100 + random.uniform(1, 12))
