@@ -4,6 +4,7 @@ import shutil
 import os
 import time
 import glob
+import socket
 
 MachineIP = [
 '192.168.7.1',
@@ -44,3 +45,5 @@ for machine in MachineIP:
 	trykill = os.popen("ssh " + machine + " '/http/mpi.log/killOldLam.py'")
     except:
 	None
+
+os.system('touch /http/mpi.log/completed-killOldLamAllMachines.' + socket.gethostname())
