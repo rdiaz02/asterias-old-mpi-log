@@ -64,7 +64,8 @@ time.sleep(random.uniform(0, 8)) ## to prevent truly simultaneous from crashing 
 
 for i in range(int(numtries)):
     os.system('touch ' + tmpDir + '/numtries_' + str(i)) ## debug
-    lamSuffix = str(int(time.time())) + str(os.getpid()) + str(random.randint(10, 9999))
+    lamSuffix = str(int(time.time())) + str(os.getpid()) + \
+                str(random.randint(10, 999999))
     lamenvfile = open(tmpDir + '/lamSuffix', mode = 'w')
     lamenvfile.write(lamSuffix)
     lamenvfile.flush()
@@ -72,6 +73,9 @@ for i in range(int(numtries)):
     lamenv = os.putenv('LAM_MPI_SESSION_SUFFIX', lamSuffix)
 
     fullRcommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + '";' + '/usr/bin/lamboot -b -H /http/mpi.defs/lamb-host.' + socket.gethostname() + '.def; cd ' + tmpDir + '; sleep 40;' + '/http/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2> error.msg &'
+    counterApplications.add_to_LAM_SUFFIX_LOG(lamSuffix, application, tmpDir,
+                                              socket.gethostname())
+
     Rrun = os.system(fullRcommand)
     os.system('touch ' + tmpDir + '/first_Rrun') ## debug
     time.sleep(100 + random.uniform(1, 12))
@@ -91,23 +95,37 @@ for i in range(int(numtries)):
         lamkill = os.system('lamhalt; lamwipe')
     except:
         None
+
+    try:
+        counterApplications.add_to_MPIErrorLog(application, tmpDir,
+                                                socket.gethostname())
+    except:
+        None
+
         
-    if not os.path.exists('/http/mpi.log/' + application + 'ErrorLog'):
-        os.system('touch /http/mpi.log/' + application + 'ErrorLog')
-    outlog = open('/http/mpi.log/' + application + 'ErrorLog', mode = 'a')
-    outlog.write('MPI fails on ' + time.ctime(time.time()) +
-                 ' Directory: ' + tmpDir + '\n')
-    outlog.close()
+#     if not os.path.exists('/http/mpi.log/' + application + 'ErrorLog'):
+#         os.system('touch /http/mpi.log/' + application + 'ErrorLog')
+#     outlog = open('/http/mpi.log/' + application + 'ErrorLog', mode = 'a')
+#     outlog.write('MPI fails on ' + time.ctime(time.time()) +
+#                  ' Directory: ' + tmpDir + '\n')
+#     outlog.close()
    
    
 if not startedOK:
     ## Logging
-    if not os.path.exists('/http/mpi.log/' + application + 'ErrorLog'):
-        os.system('touch /http/mpi.log/' + application + 'ErrorLog')
-    outlog = open('/http/mpi.log/' + application + 'ErrorLog', mode = 'a')
-    outlog.write('MPI fails on ' + time.ctime(time.time()) +
-                 ' Directory: ' + tmpDir + '\n')
-    outlog.close()
+    try:
+        counterApplications.add_to_MPIErrorLog(application, tmpDir,
+                                                socket.gethostname(),
+                                               'MPI max num crashes')
+    except:
+        None
+    
+#     if not os.path.exists('/http/mpi.log/' + application + 'ErrorLog'):
+#         os.system('touch /http/mpi.log/' + application + 'ErrorLog')
+#     outlog = open('/http/mpi.log/' + application + 'ErrorLog', mode = 'a')
+#     outlog.write('MPI fails on ' + time.ctime(time.time()) +
+#                  ' Directory: ' + tmpDir + '\n')
+#     outlog.close()
     ## Make sure the checkdone.cgi will stop; we create the two files here
     ## either of which will lead to loading results.html
     out1 = open(tmpDir + "/natural.death.pid.txt", mode = "w")
