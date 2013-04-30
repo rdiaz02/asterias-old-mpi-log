@@ -18,7 +18,13 @@ import os
 #     print 'USER ([MPI_config] in asterias_config2.ini) evaluation error. \
 #     It should be a (Python) string.'
 
-USER = 'www-data'
+
+
+## Now, this can be called by any user
+
+USER = os.popen("whoami").read().strip()
+## USER = os.environ['USER']
+## USER = 'www'
 
 
 lamds_running = os.popen('ps -C lamd -o pid,user,bsdstart h').readlines()

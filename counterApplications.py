@@ -20,7 +20,7 @@ def add_to_MPIErrorLog(application, tmpDir, hostname, message = 'MPI crash'):
         os.system('touch /http/mpi.log/' + application + 'MPIErrorLog')
     outlog = open('/http/mpi.log/' + application + 'MPIErrorLog', mode = 'a')
     fcntl.flock(outlog.fileno(), fcntl.LOCK_SH)
-    outlog.write(message + time.ctime(time.time()) +
+    outlog.write(message + ' ' + time.ctime(time.time()) +
                  '   Directory: ' + tmpDir +
                  '   Hostname: ' + hostname + '\n')
     fcntl.flock(outlog.fileno(), fcntl.LOCK_UN)

@@ -10,8 +10,11 @@ cpus      = sys.argv[2]
 
 numtries = 20
 
-MIN_LAM_NODES = 15 ## highly deployment dependant. But in our clusters
+MIN_LAM_NODES = 10 ## highly deployment dependant. But in our clusters
 ## is what we use.
+
+## FIXME: this should not be called as a programs. Should be inserted
+## as a module.
 
 ## Note: It would be nicer if, on failure after 20 tries, we could signal
 ## the error and pass it to tryRrun3.py. Now, after the 20 tris, we

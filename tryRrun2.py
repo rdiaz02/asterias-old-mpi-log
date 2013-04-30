@@ -72,7 +72,9 @@ for i in range(int(numtries)):
     lamenvfile.close()
     lamenv = os.putenv('LAM_MPI_SESSION_SUFFIX', lamSuffix)
 
-    fullRcommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + '";' + '/usr/bin/lamboot -b -H /http/mpi.defs/lamb-host.' + socket.gethostname() + '.def; cd ' + tmpDir + '; sleep 40;' + '/http/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2> error.msg &'
+#     fullRcommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + '";' + '/usr/bin/lamboot -b -H /http/mpi.defs/lamb-host.' + socket.gethostname() + '.def; cd ' + tmpDir + '; sleep 40;' + '/http/R-custom/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2> error.msg &'
+    fullRcommand = 'export LAM_MPI_SESSION_SUFFIX="' + lamSuffix + '";' + '/usr/bin/lamboot -b -H /http/mpi.defs/lamb-host.' + socket.gethostname() + '.def; cd ' + tmpDir + '; sleep 40;' + '/var/www/bin/R-local-7-LAM-MPI/bin/R  --no-restore --no-readline --no-save --slave <f1.R >>f1.Rout 2> error.msg &'
+
     counterApplications.add_to_LAM_SUFFIX_LOG(lamSuffix, application, tmpDir,
                                               socket.gethostname())
 
